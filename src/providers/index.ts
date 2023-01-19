@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { AntecipationContext } from "./anticipationContext";
+import { AnticipationContext } from "./anticipationContext";
 
-export const useAntecipationContext = () => useContext(AntecipationContext);
+export const useAnticipationContext = () => useContext(AnticipationContext);

@@ -1,13 +1,15 @@
+import AnticipationList from "./components/AnticipationList";
 import SimulationForm from "./components/SimulationForm";
-import AntecipationProvider from "./providers/anticipationContext";
+import AnticipationProvider from "./providers/anticipationContext";
 
 const App = (): JSX.Element => {
   return (
     <div>
       <main>
-        <AntecipationProvider>
+        <AnticipationProvider>
           <SimulationForm />
-        </AntecipationProvider>
+          <AnticipationList />
+        </AnticipationProvider>
       </main>
     </div>
   );

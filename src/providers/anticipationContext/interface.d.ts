@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface IAntecipationProviderProps {
+interface IAnticipationProviderProps {
   children: ReactNode;
 }
 
@@ -10,13 +10,15 @@ interface ISimulationRequest {
   mdr: number;
 }
 
-interface IAntecipation {
-  [key in number]: number;
+interface ISimulationResponse {
+  [key in string]: number;
 }
 
-interface IAntecipationContext {
-  antecipation: IAntecipation;
-  simulateAntecipation: (
+type Anticipation = [string, number];
+
+interface IAnticipationContext {
+  anticipationList: Anticipation[];
+  simulateAnticipation: (
     simulationRequest: ISimulationRequest
   ) => Promise<void>;
 }
