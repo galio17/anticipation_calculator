@@ -1,29 +1,33 @@
 import { AxiosError } from "axios";
-import { createContext, useEffect, useState } from "react";
-import api from "../../services/antecipationApi";
+import { createContext, useState } from "react";
+import api from "../../services/anticipationApi";
 import {
-  IAntecipation,
-  IAntecipationContext,
-  IAntecipationProviderProps,
+  Anticipation,
+  IAnticipationContext,
+  IAnticipationProviderProps,
   ISimulationRequest,
+  ISimulationResponse,
 } from "./interface";
 
-export const AntecipationContext = createContext<IAntecipationContext>(
-  {} as IAntecipationContext
+export const AnticipationContext = createContext<IAnticipationContext>(
+  {} as IAnticipationContext
 );
 
-const AntecipationProvider = ({
+const AnticipationProvider = ({
   children,
-}: IAntecipationProviderProps): JSX.Element => {
-  const [antecipation, setAntecipation] = useState<IAntecipation>({});
+}: IAnticipationProviderProps): JSX.Element => {
+  const [anticipationList, setAnticipationList] = useState<Anticipation[]>([]);
 
-  const simulateAntecipation = async (
+  const simulateAnticipation = async (
     simulationRequest: ISimulationRequest
   ): Promise<void> => {
     try {
-      const { data } = await api.post<IAntecipation>("", simulationRequest);
+      const { data } = await api.post<ISimulationResponse>(
+        "",
+        simulationRequest
+      );
 
-      setAntecipation(data);
+      setAnticipationList(Object.entries(data));
     } catch (error) {
       console.error(error);
 
@@ -33,17 +37,13 @@ const AntecipationProvider = ({
     }
   };
 
-  useEffect(() => {
-    console.log(antecipation);
-  }, [antecipation]);
-
   return (
-    <AntecipationContext.Provider
-      value={{ antecipation, simulateAntecipation }}
+    <AnticipationContext.Provider
+      value={{ anticipationList, simulateAnticipation }}
     >
       {children}
-    </AntecipationContext.Provider>
+    </AnticipationContext.Provider>
   );
 };
 
-export default AntecipationProvider;
+export default AnticipationProvider;

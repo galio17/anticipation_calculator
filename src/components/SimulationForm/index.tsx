@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
-import { useAntecipationContext } from "../../providers";
+import { useAnticipationContext } from "../../providers";
 import { ISimulationRequest } from "../../providers/anticipationContext/interface";
 import { simulationSchema } from "../../validators";
 import { Input } from "../Form/Input";
@@ -28,10 +28,10 @@ const SimulationForm = (): JSX.Element => {
     (errors) => console.log(errors)
   );
 
-  const { simulateAntecipation } = useAntecipationContext();
+  const { simulateAnticipation } = useAnticipationContext();
   useEffect(() => {
     const timeoutSimulationID = setTimeout(() => {
-      if (simulation) simulateAntecipation(simulation);
+      if (simulation) simulateAnticipation(simulation);
     }, 700);
 
     return () => {
