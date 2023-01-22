@@ -8,6 +8,7 @@ interface ISimulationRequest {
   amount: number;
   installments: number;
   mdr: number;
+  days?: number[];
 }
 
 interface ISimulationResponse {

@@ -1,35 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
-import { useState } from "react";
 import { useAnticipationContext } from "../../providers";
 import { ISimulationRequest } from "../../providers/anticipationContext/interface";
 import { simulationSchema } from "../../validators";
-import { Input } from "../Form/Input";
+import { Input, InputArray, inputCurrencyChange } from "../FormFields";
 
 const SimulationForm = (): JSX.Element => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ISimulationRequest>({
+  const methods = useForm<ISimulationRequest>({
     mode: "onChange",
     shouldFocusError: false,
     resolver: yupResolver(simulationSchema),
   });
+  const { handleSubmit } = methods;
 
   const [simulation, setSimulation] = useState<ISimulationRequest | null>(null);
-  const updateSimulation = handleSubmit(
-    (data: ISimulationRequest) => {
-      setSimulation({ ...data });
-    },
-    (errors) => console.log(errors)
-  );
+  const updateSimulation = handleSubmit((data: ISimulationRequest) => {
+    setSimulation({ ...data });
+  });
 
   const { simulateAnticipation } = useAnticipationContext();
   useEffect(() => {
+    console.log("simulation: ", simulation);
     const timeoutSimulationID = setTimeout(() => {
       if (simulation) simulateAnticipation(simulation);
     }, 700);
@@ -42,27 +36,28 @@ const SimulationForm = (): JSX.Element => {
   return (
     <section>
       <h1>Simule Sua Antecipação</h1>
-      <form onChange={updateSimulation}>
-        <Input
-          label="Informe o valor da venda"
-          type="currency"
-          {...register("amount")}
-          defaultValue="R$ 0,00"
-          error={errors.amount?.message}
-        />
-        <Input
-          label="Em quantas parcelas"
-          type="number"
-          {...register("installments", { valueAsNumber: true })}
-          error={errors.installments?.message}
-        />
-        <Input
-          label="Informe o percentual de MDR"
-          type="number"
-          {...register("mdr", { valueAsNumber: true })}
-          error={errors.mdr?.message}
-        />
-      </form>
+      <FormProvider {...methods}>
+        <form onChange={updateSimulation}>
+          <Input
+            label="Informe o valor da venda"
+            name="amount"
+            onChange={inputCurrencyChange}
+            defaultValue="R$ 0,00"
+          />
+          <Input
+            label="Em quantas parcelas"
+            type="number"
+            name="installments"
+          />
+          <Input label="Informe o percentual de MDR" type="number" name="mdr" />
+          <InputArray
+            label="Período de tempo"
+            subtitle="Padrão de 1, 15, 30 e 90 dias"
+            name="days"
+            onRemove={() => updateSimulation()}
+          />
+        </form>
+      </FormProvider>
     </section>
   );
 };

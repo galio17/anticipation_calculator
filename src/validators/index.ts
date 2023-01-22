@@ -19,19 +19,33 @@ export const simulationSchema: yup.SchemaOf<ISimulationRequest> = yup
   .shape({
     amount: yup
       .number()
+      .required("Campo obrigatório")
       .transform(convertCurrencyToCents)
-      .min(1000, "10 pila, porra")
-      .required(),
+      .min(1000, "Minímo de R$ 10,00"),
     installments: yup
       .number()
-      .required()
-      .typeError("Deve ser um número")
+      .required("Campo obrigatório")
+      .typeError("Campo obrigatório")
       .min(1, "Minímo de 1 parcela")
       .max(12, "Máximo de 12 parcelas"),
     mdr: yup
       .number()
-      .required()
-      .typeError("Deve ser um número")
+      .required("Campo obrigatório")
+      .typeError("Campo obrigatório")
       .positive("Apenas MDR positivo")
       .max(100, "Máximo de 100% de MDR"),
+    days: yup
+      .array()
+      .of(
+        yup
+          .number()
+          .required("Campo obrigatório")
+          .typeError("Campo obrigatório")
+      )
+      .notRequired()
+      .transform((value: number[]) => {
+        if (value.length) {
+          return value;
+        }
+      }),
   });
