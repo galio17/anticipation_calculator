@@ -5,12 +5,16 @@ import { useFieldArray } from "react-hook-form";
 import { Input } from "../Input";
 import { IInputArrayProps } from "./interface";
 
+import "../../../styles/components/InputArray.sass";
+
 export const InputArray = ({
   name,
   label,
   subtitle,
   onAdd,
+  addButton,
   onRemove,
+  removeButton,
   ...props
 }: IInputArrayProps) => {
   const { fields, append, remove } = useFieldArray({
@@ -32,25 +36,28 @@ export const InputArray = ({
   };
 
   return (
-    <div>
+    <div className="input-array-container">
       <div>
-        {!!label && <label>{label}</label>}
-        {!!subtitle && <span>{subtitle}</span>}
+        <div>
+          {!!label && <label>{label}</label>}
+          {!!subtitle && <span>{subtitle}</span>}
+        </div>
         <button type="button" onClick={handlerAdd}>
-          Append
+          {addButton ?? "Adicionar"}
         </button>
       </div>
       {fields.map(({ id }, index) => (
         <div key={id}>
-          <Input name={`${name}.${index}`} {...props} />
-          <button
-            type="button"
-            onClick={(event) => {
-              handlerRemove(event, index);
-            }}
-          >
-            Remover
-          </button>
+          <Input name={`${name}.${index}`} {...props}>
+            <button
+              type="button"
+              onClick={(event) => {
+                handlerRemove(event, index);
+              }}
+            >
+              {removeButton ?? "Remover"}
+            </button>
+          </Input>
         </div>
       ))}
     </div>

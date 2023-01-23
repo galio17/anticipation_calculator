@@ -1,0 +1,43 @@
+@use '../variables'
+
+.input-array-container
+  display: flex
+  flex-direction: column
+  gap: 5px
+
+  > div
+    display: flex
+    align-items: stretch
+    gap: 10px
+
+    > div
+      flex: 1
+      display: flex
+      flex-direction: column
+
+      label
+        color: variables.$color-grey-1
+
+        font-weight: 600
+
+      span
+        color: variables.$color-3
+
+    button
+      border: 2px solid variables.$color-1
+      border-radius: 8px
+
+      color: variables.$color-1
+      background: variables.$color-grey-1
+
+    .input-container
+      div
+        display: flex
+        align-items: stretch
+        gap: 10px
+
+        button
+          border-color: variables.$color-error
+          color: variables.$color-error
+
+

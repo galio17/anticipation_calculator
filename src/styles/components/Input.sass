@@ -1,0 +1,22 @@
+@use '../variables'
+
+.input-container
+  display: flex
+  flex-direction: column
+  gap: 3px
+
+
+  label
+    color: variables.$color-grey-1
+    font-weight: 600
+
+  input
+    flex: 1
+    
+    border: 1px solid variables.$color-1
+    border-radius: 8px
+    padding: 10px 15px
+    width: 100%
+
+  .error
+    color: variables.$color-error
