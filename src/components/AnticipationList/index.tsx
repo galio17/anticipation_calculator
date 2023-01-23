@@ -5,14 +5,14 @@ const AnticipationList = () => {
   const { anticipationList } = useAnticipationContext();
 
   return (
-    <div>
+    <section>
       <h2>Você receberá:</h2>
       <ul>
         {anticipationList.map((anticipation, index) => (
           <AnticipationCard key={index} anticipation={anticipation} />
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

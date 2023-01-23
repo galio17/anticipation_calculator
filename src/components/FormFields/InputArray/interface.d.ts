@@ -1,8 +1,10 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { IInputBaseProps } from "../utils/interface";
 
 interface IInputArrayProps extends IInputBaseProps {
   subtitle?: string;
   onAdd?: MouseEventHandler<HTMLButtonElement>;
-  onRemove?: (index: number, event: MouseEvent<HTMLButtonElement>) => void;
+  addButton?: ReactNode;
+  onRemove?: (event?: MouseEvent<HTMLButtonElement>, index?: number) => void;
+  removeButton?: ReactNode;
 }
