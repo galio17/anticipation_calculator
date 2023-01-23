@@ -6,6 +6,7 @@
   },
   "extends": [
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "standard-with-typescript",
     "prettier"
   ],
@@ -15,9 +16,11 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/consistent-type-assertions": false,
+    "@typescript-eslint/no-misused-promises": false
   }
 }
