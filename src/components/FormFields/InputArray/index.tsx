@@ -32,7 +32,7 @@ export const InputArray = ({
     index: number
   ) => {
     remove(index);
-    onRemove?.(index, event);
+    onRemove?.(event, index);
   };
 
   return (
